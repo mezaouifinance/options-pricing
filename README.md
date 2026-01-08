@@ -10,8 +10,3 @@ Includes Greeks, implied volatility, tests, and reproducible notebooks.
 - CRR binomial pricing (EU/US) + convergence study
 - Implied volatility solver (robust root-finding)
 - Unit tests (put-call parity, convergence, IV consistency)
-
-## Quickstart
-```bash
-pip install -e .
-pytest -q
