@@ -64,4 +64,3 @@ def bs_vega(S: float, K: float, r: float, sigma: float, T: float, option_type: s
         return 0.0
     d1, _ = _d1_d2(S, K, r, sigma, T)
     return S * norm_pdf(d1) * math.sqrt(T)
-
