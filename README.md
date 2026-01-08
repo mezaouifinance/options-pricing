@@ -1,3 +1,5 @@
+![CI](https://github.com/mezaouifinance/options-pricing/actions/workflows/ci.yml/badge.svg)
+
 # Options Pricing Toolkit
 Python toolkit for pricing vanilla options using:
 - Black–Scholes (European options)
