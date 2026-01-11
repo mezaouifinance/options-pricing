@@ -69,4 +69,3 @@ def crr_price(
         exercise = (S_n - K) if ot == "call" else (K - S_n)
         V = np.maximum(V, np.maximum(0.0, exercise))
     return float(V[0])
-
