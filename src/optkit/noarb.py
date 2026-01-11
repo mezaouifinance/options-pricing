@@ -22,4 +22,3 @@ def bounds_vanilla(S: float, K: float, r: float, T: float, option_type: str) -> 
 def put_call_parity_residual(C: float, P: float, S: float, K: float, r: float, T: float) -> float:
     # C - P - (S - K e^{-rT}) should be ~ 0
     return (C - P) - (S - K * math.exp(-r * T))
-
