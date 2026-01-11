@@ -82,4 +82,3 @@ def implied_vol(
             lo, f_lo = mid, f_mid
 
     return 0.5 * (lo + hi)
-
