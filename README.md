@@ -92,6 +92,10 @@ Covered by `tests/test_noarb.py`.
 CRR prices converge to the Black-Scholes closed-form as N increases.
 Reproduce with `python scripts/crr_convergence.py`.
 
+![CRR convergence](figures/crr_convergence.png)
+
+Error decays approximately as O(1/N) on the log-log scale, consistent with the theoretical rate.
+
 ---
 
 ## Project structure
