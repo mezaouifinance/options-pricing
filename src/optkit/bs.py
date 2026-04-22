@@ -64,3 +64,14 @@ def bs_vega(S: float, K: float, r: float, sigma: float, T: float, option_type: s
         return 0.0
     d1, _ = _d1_d2(S, K, r, sigma, T)
     return S * norm_pdf(d1) * math.sqrt(T)
+
+def bs_theta(S: float, K: float, r: float, sigma: float, T: float, option_type: str = "call") -> float:
+    ot = normalize_option_type(option_type)
+    if T == 0 or sigma == 0:
+        return 0.0
+    d1, d2 = _d1_d2(S, K, r, sigma, T)
+    df = discount_factor(r, T)
+    term1 = -(S * norm_pdf(d1) * sigma) / (2 * math.sqrt(T))
+    if ot == "call":
+        return term1 - r * K * df * norm_cdf(d2)
+    return term1 + r * K * df * norm_cdf(-d2)

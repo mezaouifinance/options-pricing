@@ -32,3 +32,10 @@ def test_bs_T0_matches_intrinsic_discounted():
     S, K, r, T, sigma = 105, 100, 0.05, 0.0, 0.2
     C = bs_price(S, K, r, sigma, T, "call")
     assert abs(C - max(0.0, S - K)) < 1e-12
+
+def test_bs_theta_negative_for_call():
+    # Theta is typically negative (option loses value as time passes)
+    from optkit.bs import bs_theta
+    S, K, r, T, sigma = 100, 100, 0.03, 1.0, 0.2
+    theta = bs_theta(S, K, r, sigma, T, "call")
+    assert theta < 0
