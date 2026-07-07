@@ -39,3 +39,17 @@ def test_bs_theta_negative_for_call():
     S, K, r, T, sigma = 100, 100, 0.03, 1.0, 0.2
     theta = bs_theta(S, K, r, sigma, T, "call")
     assert theta < 0
+
+def test_bs_rho_signs():
+    from optkit.bs import bs_rho
+    S, K, r, T, sigma = 100, 100, 0.03, 1.0, 0.2
+    assert bs_rho(S, K, r, sigma, T, "call") > 0
+    assert bs_rho(S, K, r, sigma, T, "put") < 0
+
+def test_bs_rho_put_call_parity():
+    # rho(call) - rho(put) = K * T * e^{-rT}
+    from optkit.bs import bs_rho
+    S, K, r, T, sigma = 100, 100, 0.03, 1.0, 0.2
+    diff = bs_rho(S, K, r, sigma, T, "call") - bs_rho(S, K, r, sigma, T, "put")
+    expected = K * T * math.exp(-r * T)
+    assert abs(diff - expected) < 1e-10

@@ -6,7 +6,7 @@ Python library for pricing vanilla options and computing Greeks under two models
 
 | Model | European | American | Greeks |
 |-------|----------|----------|--------|
-| Black–Scholes (closed-form) | ✓ | — | Δ, Γ, ν |
+| Black–Scholes (closed-form) | ✓ | — | Δ, Γ, ν, θ, ρ |
 | CRR Binomial tree | ✓ | ✓ | — |
 
 Includes an implied volatility solver and no-arbitrage validation.
