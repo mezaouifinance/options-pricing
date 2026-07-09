@@ -9,7 +9,7 @@ Python library for pricing vanilla options and computing Greeks under two models
 | Black–Scholes (closed-form) | ✓ | — | Δ, Γ, ν, θ, ρ |
 | CRR Binomial tree | ✓ | ✓ | — |
 
-Includes an implied volatility solver and no-arbitrage validation.
+Includes an implied volatility solver, no-arbitrage validation, and a Greeks-based P&L explain engine.
 
 ---
 
@@ -47,6 +47,33 @@ assert am_put >= eu_put  # early-exercise premium
 # Implied volatility (Newton + bisection fallback)
 iv = implied_vol(call, S, K, r, T, "call")      # ~0.20
 ```
+
+---
+
+## P&L Explain
+
+Decompose daily option P&L into Greek contributions (Δ, Γ, ν, θ, ρ) and an unexplained residual.
+
+```python
+from optkit.pnl import Position, MarketSnapshot, portfolio_pnl_explain
+
+positions = [
+    Position(strike=100, maturity=1.0, option_type="call", quantity=10, label="long call"),
+    Position(strike=95,  maturity=0.5, option_type="put",  quantity=-5, label="short put"),
+]
+
+prev  = MarketSnapshot(spot=100.0, vol=0.20, rate=0.03)
+today = MarketSnapshot(spot=101.5, vol=0.21, rate=0.03)
+
+df = portfolio_pnl_explain(positions, prev, today)
+print(df.round(4))
+#             actual  delta  gamma   vega  theta    rho  unexplained
+# long call   ...
+# short put   ...
+# TOTAL       ...
+```
+
+The unexplained residual captures higher-order terms not covered by a first-order Taylor expansion.
 
 ---
 
@@ -103,9 +130,10 @@ Error decays approximately as O(1/N) on the log-log scale, consistent with the t
 ```
 options-pricing/
 ├── src/optkit/
-│   ├── bs.py           # Black-Scholes price + Greeks
+│   ├── bs.py           # Black-Scholes price + Greeks (Δ Γ ν θ ρ)
 │   ├── binomial.py     # CRR binomial tree
 │   ├── implied_vol.py  # Newton + bisection IV solver
+│   ├── pnl.py          # Greeks-based P&L explain
 │   ├── noarb.py        # No-arbitrage bounds + put-call parity
 │   ├── payoff.py       # Vanilla payoff
 │   ├── types.py        # OptionType enum
@@ -114,7 +142,8 @@ options-pricing/
 │   ├── test_bs.py
 │   ├── test_binomial.py
 │   ├── test_implied_vol.py
-│   └── test_noarb.py
+│   ├── test_noarb.py
+│   └── test_pnl.py
 ├── scripts/
 │   └── crr_convergence.py
 ├── pyproject.toml
