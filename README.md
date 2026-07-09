@@ -75,6 +75,15 @@ print(df.round(4))
 
 The unexplained residual captures higher-order terms not covered by a first-order Taylor expansion.
 
+Run the demo on SPY during the COVID crash (Jan–Jun 2020):
+
+```bash
+pip install yfinance matplotlib
+python scripts/pnl_explain_demo.py
+```
+
+![P&L Explain SPY 2020](figures/pnl_explain_spy_2020.png)
+
 ---
 
 ## Run tests
